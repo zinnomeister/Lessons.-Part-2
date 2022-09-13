@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Reflection;
 
 namespace HW_042
 {
@@ -8,11 +9,13 @@ namespace HW_042
         {
             int[] startArray = { 2, 4, 6, 3, 6, 7, 4, 6 };
 
+            string methodName = string.Empty;
+
             Console.WriteLine("Input new quantity of elements:");
             int newQuantity = int.Parse(Console.ReadLine());
 
-            Resize(ref startArray, newQuantity);
-            PrintArray(ref startArray);
+            Resize(ref startArray, newQuantity, ref methodName);
+            PrintArray(ref startArray, methodName);
             Console.ReadLine();
 
             AddFirst(ref startArray);
@@ -41,14 +44,19 @@ namespace HW_042
 
         }
 
-        static void PrintArray(ref int[] array)
+        static void PrintArray(ref int[] array, string methodName = "")
         {
+            if (methodName != string.Empty)
+                Console.WriteLine(methodName + ":");
+
             for (int i = 0; i < array.Length; i++)
                 Console.WriteLine(array[i] + " |");
         }
 
-        static void Resize(ref int[] array, int newQuantity)
+        static void Resize(ref int[] array, int newQuantity, ref string methodName)
         {
+            methodName = System.Reflection.MethodBase.GetCurrentMethod().Name;
+
             int[] resizedArray = new int[newQuantity];
 
             for (int i = 0; i < array.Length && i < resizedArray.Length; i++)
